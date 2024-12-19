@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 from flask import Flask, request, render_template
@@ -8,8 +9,11 @@ app = Flask(__name__)
 
 # Load the XGBoost model from JSON
 model = xgb.Booster()
-model.load_model(r"C:\Users\priya\Downloads\Breast-Cancer-Detection-App-master\Breast-Cancer-Detection-App-master\model.json")
 
+# Use a relative path to load the model file
+current_dir = os.path.dirname(os.path.abspath(__file__))  # Get the directory of the script
+model_path = os.path.join(current_dir, "model.json")      # Construct the full path
+model.load_model(model_path)                              # Load the model
 
 
 @app.route('/')
